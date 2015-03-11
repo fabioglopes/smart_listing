@@ -100,8 +100,11 @@ module SmartListing
       else
         # let's sort by all attributes
         #
-        @collection = @collection.order(sort_keys.collect{|s| "#{s[1]} #{@sort[s[0]]}" if @sort[s[0]]}.compact) if @sort && @sort.any?
-
+				if @options[:orm] == 'mongoid'
+          @collection = @collection.order_by(sort_keys.collect{|s| "#{s[1]} #{@sort[s[0]]}" if @sort[s[0]]}[0]) if @sort && @sort.any? && !@sort[sort_keys[0][0]].blank?
+				else
+					@collection = @collection.order(sort_keys.collect{|s| "#{s[1]} #{@sort[s[0]]}" if @sort[s[0]]}.compact) if @sort && @sort.any?
+				end
         if @options[:paginate] && @per_page > 0
           @collection = @collection.page(@page).per(@per_page)
         end
@@ -211,6 +214,7 @@ module SmartListing
       end
 
       sort
-    end
+		end
+
   end
 end
