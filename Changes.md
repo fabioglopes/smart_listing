@@ -1,3 +1,10 @@
+- Fix controls not fading out list. Related to #51
+- Config now includes element templates
+
+1.1.2
+-----------
+- Some bugfixing: #20, #46, #58
+
 1.1.0
 -----------
 
